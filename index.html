@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global ESports Championship - Register Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            top: 20%;
+            left: 10%;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #45b7d1, #96ceb4);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+            bottom: 20%;
+            right: 10%;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.3)); }
+            to { filter: drop-shadow(0 0 30px rgba(78, 205, 196, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .games-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .game-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+            animation: shine 1.5s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #4ecdc4;
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.3);
+        }
+
+        .game-card.selected {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .game-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-desc {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            line-height: 1.4;
+        }
+
+        .registration-form {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+        }
+
+        .selected-game {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid #ff6b6b;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .register-btn:hover::before {
+            left: 100%;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .register-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Thank You Page Styles */
+        .thank-you-page {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .thank-you-content {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .thank-you-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease-in-out;
+        }
+
+        .thank-you-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .registration-details {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid #ff6b6b;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .registration-details h3 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .details-list {
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .details-list p {
+            margin-bottom: 0.5rem;
+        }
+
+        .next-steps {
+            background: rgba(78, 205, 196, 0.1);
+            border: 2px solid #4ecdc4;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .next-steps h3 {
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+
+        .next-steps ul {
+            text-align: left;
+            line-height: 1.8;
+            color: #e0e0e0;
+            list-style-position: inside;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-secondary {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #4ecdc4;
+            border-radius: 50px;
+            color: #4ecdc4;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-info p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .contact-info a {
+            color: #4ecdc4;
+            text-decoration: none;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            80% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .thank-you-title { font-size: 2rem; }
+            .games-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .container { padding: 1rem; }
+            .action-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Main Registration Page -->
+    <div id="mainPage">
+        <header>
+            <h1>GLOBAL ESPORTS</h1>
+            <p class="subtitle">Championship 2025 - Join the Ultimate Gaming Battle</p>
+        </header>
+
+        <div class="container">
+            <section class="games-section">
+                <h2 class="section-title">Choose Your Battlefield</h2>
+                <div class="games-grid">
+                    <div class="game-card" data-game="pubg">
+                        <span class="game-icon">🎯</span>
+                        <h3 class="game-name">PUBG</h3>
+                        <p class="game-desc">PlayerUnknown's Battlegrounds - Battle Royale at its finest</p>
+                    </div>
+                    
+                    <div class="game-card" data-game="bgmi">
+                        <span class="game-icon">🔫</span>
+                        <h3 class="game-name">BGMI</h3>
+                        <p class="game-desc">Battlegrounds Mobile India - Mobile Battle Royale Champion</p>
+                    </div>
+                    
+                    <div class="game-card" data-game="valorant">
+                        <span class="game-icon">⚡</span>
+                        <h3 class="game-name">VALORANT</h3>
+                        <p class="game-desc">Tactical FPS with unique agent abilities</p>
+                    </div>
+                    
+                    <div class="game-card" data-game="cod">
+                        <span class="game-icon">💥</span>
+                        <h3 class="game-name">CALL OF DUTY</h3>
+                        <p class="game-desc">Fast-paced multiplayer combat experience</p>
+                    </div>
+                    
+                    <div class="game-card" data-game="fortnite">
+                        <span class="game-icon">🏗️</span>
+                        <h3 class="game-name">FORTNITE</h3>
+                        <p class="game-desc">Build, Battle, and claim Victory Royale</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="registration-form">
+                <h2 class="section-title">Register Now</h2>
+                
+                <div id="selectedGame" class="selected-game" style="display: none;">
+                    <strong>Selected Game: <span id="gameName"></span></strong>
+                </div>
+
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gamertag">Gamer Tag/Username *</label>
+                            <input type="text" id="gamertag" name="gamertag" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age *</label>
+                            <input type="number" id="age" name="age" min="13" max="99" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Country *</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="us">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="ca">Canada</option>
+                                <option value="au">Australia</option>
+                                <option value="de">Germany</option>
+                                <option value="fr">France</option>
+                                <option value="jp">Japan</option>
+                                <option value="kr">South Korea</option>
+                                <option value="in">India</option>
+                                <option value="br">Brazil</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Experience Level *</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">Select Level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="professional">Professional</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="team">Team Name (Optional)</label>
+                        <input type="text" id="team" name="team" placeholder="Enter if registering as a team">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additional">Additional Information</label>
+                        <textarea id="additional" name="additional" rows="3" placeholder="Any additional information or achievements..."></textarea>
+                    </div>
+
+                    <button type="submit" class="register-btn" id="submitBtn" disabled>
+                        🎮 Register for Championship
+                    </button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Thank You Page -->
+    <div id="thankYouPage" class="thank-you-page">
+        <div class="thank-you-content">
+            <div class="thank-you-icon">🎉</div>
+            
+            <h1 class="thank-you-title">REGISTRATION SUCCESSFUL!</h1>
+            
+            <p style="font-size: 1.3rem; color: #b0b0b0; margin-bottom: 2rem;">
+                Welcome to the Global ESports Championship 2025
+            </p>
+            
+            <div class="registration-details">
+                <h3>Registration Details</h3>
+                <div class="details-list" id="registrationDetails">
+                    <!-- Details will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="next-steps">
+                <h3>What's Next?</h3>
+                <ul>
+                    <li>📧 Check your email for confirmation and tournament details</li>
+                    <li>📅 Tournament schedule will be sent within 24 hours</li>
+                    <li>🎮 Prepare your gaming setup and practice hard</li>
+                    <li>💰 Prize pool details coming soon</li>
+                </ul>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="goBackToRegistration()">
+                    Register Another Player
+                </button>
+                <button class="btn-secondary" onclick="downloadConfirmation()">
+                    Download Confirmation
+                </button>
+            </div>
+            
+            <div class="contact-info">
+                <p>For any queries, contact us at: <a href="mailto:support@globalesports.com">support@globalesports.com</a></p>
+                <p style="color: #666; font-size: 0.8rem; margin-top: 0.5rem;">
+                    Global ESports Championship 2025 - Where Legends Are Born
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedGame = null;
+        let registrationData = null;
+
+        // Game selection functionality
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove previous selection
+                document.querySelectorAll('.game-card').forEach(c => c.classList.remove('selected'));
+                
+                // Add selection to clicked card
+                this.classList.add('selected');
+                selectedGame = this.dataset.game;
+                
+                // Update selected game display
+                const selectedGameDiv = document.getElementById('selectedGame');
+                const gameNameSpan = document.getElementById('gameName');
+                gameNameSpan.textContent = this.querySelector('.game-name').textContent;
+                selectedGameDiv.style.display = 'block';
+                
+                // Enable submit button
+                document.getElementById('submitBtn').disabled = false;
+                
+                // Scroll to form
+                document.querySelector('.registration-form').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedGame) {
+                alert('Please select a game first!');
+                return;
+            }
+
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Store registration data in memory
+            registrationData = {
+                game: selectedGame,
+                gameName: document.getElementById('gameName').textContent,
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                gamertag: formData.get('gamertag'),
+                age: formData.get('age'),
+                country: formData.get('country'),
+                experience: formData.get('experience'),
+                team: formData.get('team'),
+                registrationId: 'GEC2025-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                registrationDate: new Date().toLocaleDateString()
+            };
+            
+            // Show processing state
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.textContent = 'Processing Registration...';
+            submitBtn.disabled = true;
+            
+            // Simulate processing time and redirect
+            setTimeout(() => {
+                showThankYouPage();
+            }, 2000);
+        });
+
+        // Function to show thank you page
+        function showThankYouPage() {
+            // Hide main page
+            document.getElementById('mainPage').style.display = 'none';
+            
+            // Show thank you page
+            document.getElementById('thankYouPage').style.display = 'flex';
+            
+            // Populate registration details
+            const detailsDiv = document.getElementById('registrationDetails');
+            detailsDiv.innerHTML = `
+                <p><strong>Player Name:</strong> ${registrationData.firstName} ${registrationData.lastName}</p>
+                <p><strong>Game:</strong> ${registrationData.gameName}</p>
+                <p><strong>Gamer Tag:</strong> ${registrationData.gamertag}</p>
+                <p><strong>Email:</strong> ${registrationData.email}</p>
+                <p><strong>Phone:</strong> ${registrationData.phone}</p>
+                <p><strong>Country:</strong> ${registrationData.country}</p>
+                <p><strong>Experience:</strong> ${registrationData.experience}</p>
+                ${registrationData.team ? `<p><strong>Team:</strong> ${registrationData.team}</p>` : ''}
+                <p><strong>Registration ID:</strong> <span style="color: #4ecdc4; font-weight: bold;">${registrationData.registrationId}</span></p>
+            `;
+        }
+
+        // Function to go back to registration
+        function goBackToRegistration() {
+            // Reset everything
+            document.getElementById('registrationForm').reset();
+            selectedGame = null;
+            registrationData = null;
+            document.getElementById('selectedGame').style.display = 'none';
+            document.querySelectorAll('.game-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('submitBtn').textContent = '🎮 Register for Championship';
+            document.getElementById('submitBtn').disabled = true;
+            
+            // Show main page and hide thank you page
+            document.getElementById('mainPage').style.display = 'block';
+            document.getElementById('thankYouPage').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Function to download confirmation
+        function downloadConfirmation() {
+            if (!registrationData) return;
+            
+            const content = `Global ESports Championship 2025 - Registration Confirmation
+
+Player Name: ${registrationData.firstName} ${registrationData.lastName}
+Game: ${registrationData.gameName}
+Gamer Tag: ${registrationData.gamertag}
+Email: ${registrationData.email}
+Phone: ${registrationData.phone}
+Country: ${registrationData.country}
+Experience Level: ${registrationData.experience}
+${registrationData.team ? `Team: ${registrationData.team}\n` : ''}Registration ID: ${registrationData.registrationId}
+Registration Date: ${registrationData.registrationDate}
+
+Thank you for registering! Tournament details will be sent to your email.
+
+Contact: support@globalesports.com
+Global ESports Championship 2025 - Where Legends Are Born`;
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `GEC2025_Confirmation_${registrationData.registrationId}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Add interactive effects
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
